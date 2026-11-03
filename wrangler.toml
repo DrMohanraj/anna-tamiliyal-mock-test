@@ -1,0 +1,6 @@
+# Cloudflare Worker (நிலையான தளம் மட்டும்; build தேவையில்லை; deploy: npx wrangler deploy)
+name = "anna-tamiliyal-mock-test"
+compatibility_date = "2026-10-01"
+
+[assets]
+directory = "public"
