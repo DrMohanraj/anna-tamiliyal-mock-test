@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>அண்ணா தமிழியல் நிறுவனம் — UG TRB Mock Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@700;800;900&family=Noto+Sans+Tamil:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Ink Blue · Thunderhead · Eraser — மென்மையான (lighter) பதிப்பு */
+    --ink:#0E3442;
+    --ink-soft:#557079;
+    --paper:#FAFCFC;
+    --line:#D3E3E7;
+    --primary:#0F5A70;
+    --primary-deep:#0A4252;
+    --primary-pale:#E4F0F3;
+    --navy:#0F5A70;
+    --navy-deep:#0A4252;
+    --accent:#E2606F;
+    --pink:#EC8592;
+    --pink-deep:#D9566A;
+    --pink-pale:#FDECEE;
+    --tw-deep:#0F5A70;
+    --tw-mid:#4D93A7;
+    --tw-light:#C3DEE6;
+    --success:#2F7D63;
+    --success-pale:#E2F2EC;
+    --danger:#C23A4C;
+    --danger-pale:#FBE6E9;
+    --lockbg:#EEF5F7;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans Tamil','Catamaran',sans-serif;min-height:100vh;}
+  .app{max-width:1040px;margin:0 auto;padding:18px 20px 60px;}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:2px 0 10px;margin-bottom:14px;flex-wrap:wrap;min-height:44px;}
+  .brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  .brand .eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--accent);font-weight:700;text-transform:uppercase;}
+  .brand h1{font-family:'Catamaran',sans-serif;font-weight:800;font-size:16px;margin:0;color:var(--primary-deep);letter-spacing:.01em;}
+  .topmeta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .backbtn{font-family:'Catamaran',sans-serif;font-weight:700;font-size:14px;color:var(--primary);background:none;border:1.5px solid var(--primary);border-radius:8px;padding:8px 14px;cursor:pointer;}
+  .pill{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:13px;border:1.5px solid var(--ink);border-radius:999px;padding:6px 14px;background:#fff;color:var(--ink);display:flex;align-items:center;gap:6px;}
+  .pill.timer{border-color:var(--navy);color:var(--navy);}
+  .pill.timer.low{border-color:var(--danger);color:var(--danger);background:var(--danger-pale);}
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:currentColor;}
+
+  main[hidden]{display:none !important;}
+
+  /* ---------- Library (minimal) ---------- */
+  .lib-intro{margin:6px 0 18px;}
+  .lib-intro h2{font-family:'Catamaran',sans-serif;font-weight:800;font-size:19px;margin:0 0 4px;color:var(--primary-deep);}
+  .lib-intro p{margin:0;color:var(--ink-soft);font-size:14px;line-height:1.7;}
+  .howto{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px 18px;}
+  @media (max-width:640px){ .howto{grid-template-columns:1fr;} }
+  .howto li{font-size:13px;line-height:1.6;color:var(--ink-soft);padding-left:16px;position:relative;}
+  .howto li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--tw-light);}
+  .test-grid-lib{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media (max-width:960px){ .test-grid-lib{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){
+    .test-grid-lib{grid-template-columns:1fr;gap:10px;}
+    .test-grid-lib .test-card{display:grid;grid-template-columns:1fr auto;grid-template-areas:"title btn" "meta btn";column-gap:12px;row-gap:2px;align-items:center;padding:14px 16px;}
+    .test-grid-lib .test-card .num{display:none;}
+    .test-grid-lib .test-card h3{grid-area:title;font-size:16px;}
+    .test-grid-lib .test-card .meta{grid-area:meta;font-size:11.5px;white-space:nowrap;}
+    .test-grid-lib .test-card .btn{grid-area:btn;align-self:center;margin-top:0;padding:8px 14px;}
+    .test-grid-lib .test-card .lock{display:none;}
+    .test-grid-lib .test-card .lock-inline{display:inline;}
+  }
+  .test-card{border:1px solid var(--line);border-radius:14px;padding:22px;background:#fff;display:flex;flex-direction:column;gap:6px;position:relative;transition:border-color .15s ease, box-shadow .15s ease;}
+  .test-card:hover{border-color:var(--tw-mid);box-shadow:0 6px 18px rgba(15,90,112,.08);}
+  .test-card .num{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--ink-soft);letter-spacing:.08em;}
+  .test-card h3{font-family:'Catamaran',sans-serif;font-weight:800;font-size:18px;margin:0;color:var(--ink);}
+  .test-card .meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft);white-space:nowrap;}
+  .test-card .lock{position:absolute;top:20px;right:20px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--pink-deep);background:var(--pink-pale);border-radius:999px;padding:4px 10px;}
+  .test-card .lock-inline{display:none;color:var(--pink-deep);}
+  .test-card .btn{margin-top:14px;align-self:flex-start;padding:10px 20px;font-size:14px;}
+
+  .btn{font-family:'Catamaran',sans-serif;font-weight:800;font-size:15px;border:none;border-radius:9px;padding:12px 22px;cursor:pointer;background:var(--primary);color:#fff;letter-spacing:.02em;transition:background .15s ease, transform .12s ease;}
+  .btn:hover{background:var(--primary-deep);}
+  .btn:active{transform:scale(.97);}
+  .btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+  .btn.secondary{background:transparent;color:var(--primary);border:2px solid var(--primary);}
+  .btn.secondary:hover{background:var(--primary-pale);}
+  .btn.navybtn{background:var(--tw-deep);}
+  .btn.navybtn:hover{background:var(--navy-deep);}
+
+  /* Modal */
+  .modal-overlay{position:fixed;inset:0;background:rgba(14,52,66,.45);display:flex;align-items:center;justify-content:center;z-index:80;padding:16px;}
+  .modal-overlay[hidden]{display:none;}
+  .modal-box{background:#fff;border:2px solid var(--tw-deep);border-radius:14px;max-width:420px;width:100%;padding:28px 26px;text-align:center;}
+  .modal-box .lock-big{font-size:34px;margin-bottom:6px;}
+  .modal-box h3{font-family:'Catamaran',sans-serif;font-weight:900;font-size:20px;margin:0 0 8px;color:var(--tw-deep);}
+  .modal-box p{color:var(--ink-soft);font-size:14px;line-height:1.7;margin:0 0 18px;}
+  .modal-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+
+  /* Test layout (reuses existing question / OMR structure) */
+  .test-grid{display:grid;grid-template-columns:1fr 280px;gap:18px;align-items:start;}
+  @media (max-width:720px){ .test-grid{grid-template-columns:1fr;} }
+
+  .qcard{border:1.5px solid var(--tw-light);box-shadow:0 4px 16px rgba(15,90,112,.06);border-radius:12px;background:#fff;padding:26px 26px 22px;position:relative;}
+  .qhead{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;}
+  .qnum{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:17px;background:var(--primary);color:#fff;border-radius:8px;min-width:38px;height:38px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .qtext{font-size:18px;line-height:1.65;font-weight:500;padding-top:5px;}
+  .qtopic{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-soft);letter-spacing:.08em;margin:-10px 0 14px 52px;text-transform:uppercase;}
+
+  .options{display:flex;flex-direction:column;gap:11px;margin-left:52px;}
+  .opt{display:flex;align-items:center;gap:13px;border:1.5px solid var(--line);border-radius:9px;padding:11px 15px;cursor:pointer;background:#fff;transition:border-color .15s ease, background .15s ease;}
+  .opt:hover{border-color:var(--tw-mid);background:#F3F8FA;}
+  .opt.selected{border-color:var(--primary);background:var(--primary-pale);}
+  .bubble{width:30px;height:30px;border-radius:50%;flex-shrink:0;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--ink);background:#fff;transition:background .15s ease,color .15s ease,transform .1s ease;}
+  .opt.selected .bubble{background:var(--primary);border-color:var(--primary);color:#fff;transform:scale(1.05);}
+  .opttext{font-size:15.5px;}
+
+  .qnav{display:flex;justify-content:space-between;align-items:center;margin-top:24px;margin-left:52px;flex-wrap:wrap;gap:10px;}
+  .qnav .side-links{display:flex;gap:10px;}
+  .link-btn{background:none;border:none;color:var(--navy);font-family:'Catamaran',sans-serif;font-weight:700;font-size:14px;cursor:pointer;padding:8px 4px;}
+  .link-btn:disabled{color:var(--line);cursor:not-allowed;}
+
+  .omr-panel{border:1px solid var(--line);border-radius:12px;background:#fff;padding:0 18px 18px;position:sticky;top:16px;overflow:hidden;}
+  .omr-title{font-family:'Catamaran',sans-serif;font-weight:800;font-size:14.5px;color:var(--pink-deep);letter-spacing:.03em;margin:0 -18px 3px;background:var(--pink-pale);padding:14px 18px 10px;display:flex;align-items:center;justify-content:space-between;}
+  .omr-sub{font-size:11.5px;color:var(--pink-deep);margin:14px 0 14px;font-weight:600;}
+  .omr-grid{display:flex;flex-direction:column;gap:6px;max-height:420px;overflow-y:auto;padding-right:4px;}
+  .omr-row{display:flex;align-items:center;gap:8px;}
+  .omr-row .rn{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;width:24px;color:var(--pink-deep);flex-shrink:0;}
+  .omr-row.current{background:var(--pink-pale);border-radius:6px;margin:0 -6px;padding:2px 6px;}
+  .omr-row.current .rn{color:var(--pink-deep);}
+  .obub{width:22px;height:22px;border-radius:50%;border:1.6px solid var(--pink);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--pink-deep);background:#fff;flex-shrink:0;}
+  .obub.filled{background:var(--pink-deep);border-color:var(--pink-deep);color:#fff;}
+  .obub.correct{background:var(--success);border-color:var(--success);color:#fff;}
+  .obub.wrong{background:var(--danger);border-color:var(--danger);color:#fff;}
+  .omr-foot{margin-top:16px;border-top:1.5px dashed var(--pink);padding-top:14px;}
+  .progress-txt{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--pink-deep);margin-bottom:10px;font-weight:600;}
+  .omr-panel .btn{width:100%;padding:12px;font-size:14.5px;}
+
+  @media (max-width:720px){
+    .app{padding:12px 16px 90px;}
+    .topmeta{gap:8px;width:100%;flex-wrap:nowrap;}
+    .backbtn{font-size:13px;padding:6px 10px;}
+    .pill{font-size:12px;padding:5px 10px;}
+    .qcard{padding:18px 16px;}
+    .omr-title{cursor:pointer;}
+    .omr-panel{position:fixed;left:0;right:0;bottom:0;top:auto;border-radius:16px 16px 0 0;max-height:70vh;box-shadow:0 -8px 24px rgba(0,0,0,.18);z-index:40;transform:translateY(calc(100% - 58px));transition:transform .25s ease;}
+    .omr-panel.open{transform:translateY(0);}
+    .omr-panel .omr-grid{max-height:38vh;}
+    .omr-drag{width:40px;height:4px;background:var(--line);border-radius:3px;margin:0 auto 10px;}
+    .options,.qtopic,.qnav{margin-left:0;}
+  }
+
+  .result-hero{border:1.5px solid var(--tw-light);border-radius:14px;background:linear-gradient(135deg,#E6F2F5 0%,#fff 60%,var(--pink-pale) 100%);padding:30px;text-align:center;margin-bottom:20px;}
+  .result-hero .score{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:44px;color:var(--primary);}
+  .result-hero .score span{font-size:20px;color:var(--ink-soft);}
+  .result-hero h2{font-family:'Catamaran',sans-serif;font-weight:900;margin:4px 0 16px;font-size:22px;}
+  .breakdown{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:10px;}
+  .chip{border-radius:8px;padding:8px 16px;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:13px;}
+  .chip.ok{background:var(--success-pale);color:var(--success);}
+  .chip.bad{background:var(--danger-pale);color:var(--danger);}
+  .chip.skip{background:var(--line);color:var(--ink-soft);}
+
+  .review{border:2px solid var(--line);border-radius:12px;background:#fff;padding:22px 24px;margin-bottom:14px;}
+  .review .qtext{margin-bottom:10px;}
+  .review .ans-line{font-size:14px;margin:4px 0;padding-left:52px;}
+  .review .ans-line b{font-family:'JetBrains Mono',monospace;}
+  .tag-ok{color:var(--success);font-weight:700;}
+  .tag-bad{color:var(--danger);font-weight:700;}
+
+  .footer-actions{display:flex;justify-content:center;gap:14px;margin-top:24px;flex-wrap:wrap;}
+  ::-webkit-scrollbar{width:8px;}
+  ::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important;} }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="topbar">
+    <div class="brand">
+      <h1>அண்ணா தமிழியல் நிறுவனம்</h1>
+      <span class="eyebrow">UG TRB · தமிழ்</span>
+    </div>
+    <div class="topmeta" id="topmeta"></div>
+  </div>
+
+  <!-- LIBRARY -->
+  <main id="screen-lib">
+    <div class="lib-intro">
+      <h2>மாதிரித் தேர்வுகள்</h2>
+      <p>UG TRB தமிழ்ப் பாடத் தேர்வுக்கான பயிற்சி — 3 தேர்வுகள் இலவசம்.</p>
+      <ul class="howto">
+        <li>ஒவ்வொரு வினாவுக்கும் 4 விடைகள்; சரியான ஒன்றைத் தேர்ந்தெடுங்கள்.</li>
+        <li>OMR பதில் தாளிலும் நேரடியாகக் குறிக்கலாம்.</li>
+        <li>நேரம் முடிந்தால் தேர்வு தானாகச் சமர்ப்பிக்கப்படும்.</li>
+        <li>முடிவில் மதிப்பெண்ணும் சரியான விடைகளும் காட்டப்படும்.</li>
+      </ul>
+    </div>
+    <div class="test-grid-lib" id="testGrid"></div>
+  </main>
+
+  <!-- TEST -->
+  <main id="screen-test" hidden>
+    <div class="test-grid">
+      <div class="qcard">
+        <div class="qhead">
+          <div class="qnum" id="qnumBadge">1</div>
+          <div class="qtext" id="qtext"></div>
+        </div>
+        <div class="qtopic" id="qtopic"></div>
+        <div class="options" id="options"></div>
+        <div class="qnav">
+          <div class="side-links">
+            <button class="link-btn" id="prevBtn" onclick="goPrev()">← முந்தையது</button>
+            <button class="link-btn" id="clearBtn" onclick="clearCurrent()">அழி</button>
+          </div>
+          <button class="btn" id="nextBtn" onclick="goNext()">அடுத்தது →</button>
+        </div>
+      </div>
+
+      <div class="omr-panel" id="omrPanel">
+        <div class="omr-drag" id="omrDrag"></div>
+        <div class="omr-title">பதில் தாள் (OMR) <span id="omrToggleIcon" style="display:none">▲</span></div>
+        <div class="omr-sub">குமிழை அழுத்தி நேரடியாகவும் பதில் குறிக்கலாம்</div>
+        <div class="omr-grid" id="omrGrid"></div>
+        <div class="omr-foot">
+          <div class="progress-txt" id="progressTxt">0 / 0 பதிலளிக்கப்பட்டது</div>
+          <button class="btn" onclick="submitTest()">தேர்வை சமர்ப்பி</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- RESULTS -->
+  <main id="screen-result" hidden>
+    <div class="result-hero">
+      <div class="score" id="scoreText">0<span>/0</span></div>
+      <h2>தேர்வு முடிவு</h2>
+      <div class="breakdown" id="breakdown"></div>
+    </div>
+    <div id="reviewList"></div>
+    <div class="footer-actions">
+      <button class="btn secondary" onclick="backToLibrary()">தேர்வுகள் பட்டியலுக்கு செல்</button>
+    </div>
+  </main>
+
+</div>
+
+<!-- PREMIUM LOCK MODAL -->
+<div class="modal-overlay" id="lockModal" hidden>
+  <div class="modal-box">
+    <div class="lock-big">🔒</div>
+    <h3 id="lockTitle">பிரீமியம் தேர்வு</h3>
+    <p>இந்தத் தேர்வு பிரீமியம் சந்தாதாரர்களுக்கு மட்டும். முதல் 3 தேர்வுகள் இலவசம்.</p>
+    <div class="modal-actions">
+      <button class="btn secondary" onclick="closeLockModal()">மூடு</button>
+      <button class="btn navybtn" onclick="demoUnlock()">டெமோவைப் பார் (preview)</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------------------------------------------------------
+   TESTS DATA
+   ஒவ்வொரு test object-லும் questions: [{t,q,o,a}, ...]
+   t = தலைப்பு/பிரிவு, q = வினா, o = 4 options, a = சரியான index (0-3)
+   புதிய வினாக்களைச் சேர்க்க / மாற்ற இந்த வரிசையில் மட்டும் திருத்தினால் போதும்.
+--------------------------------------------------------- */
+const FULL1_QUESTIONS = [
+{t:"இலக்கியம்",q:"திருக்குறளின் ஆசிரியர் யார்?",o:["திருவள்ளுவர்","கம்பர்","இளங்கோ அடிகள்","ஔவையார்"],a:0},
+{t:"இலக்கியம்",q:"சிலப்பதிகாரத்தை இயற்றியவர் யார்?",o:["சேக்கிழார்","இளங்கோ அடிகள்","சீத்தலைச் சாத்தனார்","கம்பர்"],a:1},
+{t:"இலக்கியம்",q:"மணிமேகலையை இயற்றியவர் யார்?",o:["இளங்கோ அடிகள்","தொல்காப்பியர்","சீத்தலைச் சாத்தனார்","கபிலர்"],a:2},
+{t:"இலக்கியம்",q:"கம்பராமாயணத்தின் ஆசிரியர் யார்?",o:["கம்பர்","பாரதியார்","அருணகிரிநாதர்","சேக்கிழார்"],a:0},
+{t:"இலக்கியம்",q:"தமிழின் முதல் இலக்கண நூல் எது?",o:["நன்னூல்","தொல்காப்பியம்","யாப்பருங்கலம்","வீரசோழியம்"],a:1},
+{t:"இலக்கியம்",q:"குறிஞ்சிப்பாட்டு நூலை இயற்றியவர் யார்?",o:["கபிலர்","பரணர்","நக்கீரர்","ஔவையார்"],a:0},
+{t:"இலக்கியம்",q:"புறநானூற்றில் உள்ள பாடல்களின் எண்ணிக்கை என்ன?",o:["300","400","500","200"],a:1},
+{t:"இலக்கியம்",q:"எட்டுத்தொகை நூல்களில் இல்லாதது எது?",o:["நற்றிணை","குறுந்தொகை","திருக்குறள்","ஐங்குறுநூறு"],a:2},
+{t:"இலக்கியம்",q:"பத்துப்பாட்டு நூல்களுள் ஒன்று எது?",o:["திருமுருகாற்றுப்படை","நாலடியார்","ஆத்திசூடி","பழமொழி நானூறு"],a:0},
+{t:"இலக்கியம்",q:"எட்டுத்தொகை நூல்கள் மொத்தம் எத்தனை?",o:["6","8","10","12"],a:1},
+{t:"இலக்கியம்",q:"ஆத்திசூடியை இயற்றியவர் யார்?",o:["ஔவையார்","கம்பர்","பாரதியார்","திருவள்ளுவர்"],a:0},
+{t:"இலக்கியம்",q:"நாலடியார் எந்த வகை நூல்?",o:["காப்பியம்","அறநூல்","இலக்கண நூல்","வரலாறு நூல்"],a:1},
+{t:"இலக்கியம்",q:"திருவாசகத்தை இயற்றியவர் யார்?",o:["மாணிக்கவாசகர்","சம்பந்தர்","அப்பர்","சுந்தரர்"],a:0},
+{t:"இலக்கியம்",q:"தேவாரம் பாடிய மூவருள் இல்லாதவர் யார்?",o:["சம்பந்தர்","அப்பர்","சுந்தரர்","மாணிக்கவாசகர்"],a:3},
+{t:"இலக்கியம்",q:"திருப்புகழை இயற்றியவர் யார்?",o:["அருணகிரிநாதர்","சேக்கிழார்","கம்பர்","பாரதிதாசன்"],a:0},
+{t:"இலக்கியம்",q:"பெரியபுராணத்தை இயற்றியவர் யார்?",o:["சேக்கிழார்","கம்பர்","இளங்கோ அடிகள்","அருணகிரிநாதர்"],a:0},
+{t:"இலக்கியம்",q:"கலிங்கத்துப்பரணியை இயற்றியவர் யார்?",o:["சயங்கொண்டார்","ஒட்டக்கூத்தர்","கம்பர்","பாரதியார்"],a:0},
+{t:"இலக்கியம்",q:"'வள்ளலார்' என்ற பெயரில் அறியப்படுபவர் யார்?",o:["இராமலிங்க அடிகளார்","மாணிக்கவாசகர்","அருணகிரிநாதர்","திருமூலர்"],a:0},
+{t:"இலக்கியம்",q:"பாரதியார் பிறந்த ஊர் எது?",o:["ஏட்டையாபுரம்","திருச்சி","மதுரை","சென்னை"],a:0},
+{t:"இலக்கியம்",q:"பாரதிதாசனின் இயற்பெயர் என்ன?",o:["சுப்புரத்தினம்","சுவாமிநாதன்","கணேசன்","இராமலிங்கம்"],a:0},
+{t:"இலக்கியம்",q:"திருக்குறள் எத்தனை பிரிவுகளாகப் பிரிக்கப்பட்டுள்ளது?",o:["2","3","4","5"],a:1},
+{t:"இலக்கியம்",q:"திருக்குறளில் உள்ள மொத்தக் குறள்களின் எண்ணிக்கை என்ன?",o:["1300","1330","1250","1400"],a:1},
+{t:"இலக்கியம்",q:"யாப்பருங்கலக் காரிகையை இயற்றியவர் யார்?",o:["அமிதசாகரர்","பவணந்தி முனிவர்","தொல்காப்பியர்","நன்னூலார்"],a:0},
+{t:"இலக்கியம்",q:"நன்னூலை இயற்றியவர் யார்?",o:["பவணந்தி முனிவர்","அகத்தியர்","தொல்காப்பியர்","இளம்பூரணர்"],a:0},
+{t:"இலக்கியம்",q:"'தமிழ்த் தாத்தா' என்று அழைக்கப்படுபவர் யார்?",o:["உ.வே.சாமிநாதையர்","பாரதியார்","பரிதிமாற் கலைஞர்","மறைமலையடிகள்"],a:0},
+{t:"இலக்கணம்",q:"தமிழ் மொழியில் உள்ள மொத்த எழுத்துக்கள் எத்தனை?",o:["216","247","233","250"],a:1},
+{t:"இலக்கணம்",q:"தமிழில் உயிர் எழுத்துக்கள் எத்தனை?",o:["10","12","14","18"],a:1},
+{t:"இலக்கணம்",q:"தமிழில் மெய் எழுத்துக்கள் எத்தனை?",o:["16","18","20","23"],a:1},
+{t:"இலக்கணம்",q:"தமிழில் உயிர்மெய் எழுத்துக்கள் எத்தனை?",o:["200","210","216","220"],a:2},
+{t:"இலக்கணம்",q:"தமிழில் ஆய்த எழுத்து எத்தனை?",o:["0","1","2","3"],a:1},
+{t:"இலக்கணம்",q:"தமிழில் வேற்றுமை உருபுகள் எத்தனை?",o:["5","6","7","8"],a:2},
+{t:"இலக்கணம்",q:"தொகைகள் எத்தனை வகைப்படும்?",o:["4","5","6","7"],a:2},
+{t:"இலக்கணம்",q:"எழுவாய், பயனிலை, விளி ஆகியவை எதன் உறுப்புகள்?",o:["சொல்","எழுத்து","வாக்கியம்","பொருள்"],a:2},
+{t:"இலக்கணம்",q:"தமிழில் சொல் வகைகள் எத்தனை?",o:["3","4","5","6"],a:1},
+{t:"இலக்கணம்",q:"'மரம்' என்பது எந்த வகைச் சொல்?",o:["பெயர்ச்சொல்","வினைச்சொல்","இடைச்சொல்","உரிச்சொல்"],a:0},
+{t:"இலக்கணம்",q:"'ஓடினான்' என்பது எந்த வகைச் சொல்?",o:["பெயர்ச்சொல்","வினைச்சொல்","இடைச்சொல்","உரிச்சொல்"],a:1},
+{t:"இலக்கணம்",q:"'மற்றும்' என்பது எந்த வகைச் சொல்?",o:["பெயர்ச்சொல்","வினைச்சொல்","இடைச்சொல்","உரிச்சொல்"],a:2},
+{t:"இலக்கணம்",q:"'மிக' என்பது எந்த வகைச் சொல்?",o:["பெயர்ச்சொல்","வினைச்சொல்","இடைச்சொல்","உரிச்சொல்"],a:3},
+{t:"இலக்கணம்",q:"உயிர் எழுத்துக்களில் நெடில் எழுத்துக்கள் எத்தனை?",o:["4","5","6","7"],a:1},
+{t:"இலக்கணம்",q:"உயிர் எழுத்துக்களில் குறில் எழுத்துக்கள் எத்தனை?",o:["5","6","7","8"],a:2},
+{t:"இலக்கணம்",q:"'கண் + அன்' சேர்ந்து உருவாகும் சொல் எது?",o:["கண்ணன்","கணன்","கணனன்","காணன்"],a:0},
+{t:"இலக்கணம்",q:"'மரம் + கன்று' சேர்ந்து உருவாகும் சொல் எது?",o:["மரக்கன்று","மரகன்று","மரம்கன்று","மரங்கன்று"],a:0},
+{t:"இலக்கணம்",q:"இரண்டாம் வேற்றுமை உருபு எது?",o:["ஐ","ஆல்","கு","இன்"],a:0},
+{t:"இலக்கணம்",q:"மூன்றாம் வேற்றுமை உருபு எது?",o:["ஐ","ஆல்","கு","இல்"],a:1},
+{t:"இலக்கணம்",q:"நான்காம் வேற்றுமை உருபு எது?",o:["ஐ","ஆல்","கு","இன்"],a:2},
+{t:"இலக்கணம்",q:"ஆறாம் வேற்றுமை உருபு எது?",o:["ஐ","இன்","கு","இல்"],a:1},
+{t:"இலக்கணம்",q:"ஏழாம் வேற்றுமை உருபு எது?",o:["ஐ","ஆல்","இல்/கண்","கு"],a:2},
+{t:"இலக்கணம்",q:"வல்லின எழுத்துக்கள் எத்தனை?",o:["4","5","6","7"],a:2},
+{t:"இலக்கணம்",q:"மெல்லின எழுத்துக்கள் எத்தனை?",o:["5","6","7","8"],a:1},
+{t:"இலக்கணம்",q:"இடையின எழுத்துக்கள் எத்தனை?",o:["5","6","7","8"],a:1},
+{t:"இலக்கணம்",q:"'படித்தேன்' என்பது எந்த இடத்தில் அமைந்த வினைமுற்று?",o:["தன்மை","முன்னிலை","படர்க்கை","எவ்விடமும் இல்லை"],a:0},
+{t:"இலக்கணம்",q:"'படித்தாய்' என்பது எந்த இடத்தில் அமைந்த வினைமுற்று?",o:["தன்மை","முன்னிலை","படர்க்கை","எவ்விடமும் இல்லை"],a:1},
+{t:"இலக்கணம்",q:"'படித்தான்' என்பது எந்த இடத்தில் அமைந்த வினைமுற்று?",o:["தன்மை","முன்னிலை","படர்க்கை","எவ்விடமும் இல்லை"],a:2},
+{t:"இலக்கணம்",q:"'அவள் முகம் நிலவு போன்றது' — இது எந்த அணி?",o:["உவமையணி","உருவகவணி","இயைபணி","எடுத்துக்காட்டு அணி"],a:0},
+{t:"இலக்கணம்",q:"அடிதோறும் முதல் எழுத்து ஒன்றாக அமைவது எது?",o:["எதுகை","மோனை","இயைபு","அளபெடை"],a:1},
+{t:"இலக்கணம்",q:"அடிதோறும் இரண்டாம் எழுத்து ஒன்றாக அமைவது எது?",o:["எதுகை","மோனை","இயைபு","அளபெடை"],a:0},
+{t:"இலக்கணம்",q:"அடி இறுதிச் சீர் ஒத்திசைவது எது?",o:["எதுகை","மோனை","இயைபு","அளபெடை"],a:2},
+{t:"இலக்கணம்",q:"'மலரும்', 'சிரிக்கும்' போன்ற சொற்கள் எக்காலத்தைக் குறிக்கின்றன?",o:["இறந்த காலம்","நிகழ் காலம்","எதிர் காலம்","பொதுக் காலம்"],a:2},
+{t:"இலக்கணம்",q:"'சென்றான்' என்பது எக்காலச் சொல்?",o:["இறந்த காலம்","நிகழ் காலம்","எதிர் காலம்","பொதுக் காலம்"],a:0},
+{t:"இலக்கணம்",q:"'செல்கிறான்' என்பது எக்காலச் சொல்?",o:["இறந்த காலம்","நிகழ் காலம்","எதிர் காலம்","பொதுக் காலம்"],a:1},
+{t:"சொல் வளம்",q:"'நன்மை' என்பதற்கு எதிர்ச்சொல் எது?",o:["தீமை","இன்பம்","நலம்","வலிமை"],a:0},
+{t:"சொல் வளம்",q:"'இருள்' என்பதற்கு எதிர்ச்சொல் எது?",o:["ஒளி","கருமை","மாலை","மேகம்"],a:0},
+{t:"சொல் வளம்",q:"'வலிமை' என்பதற்கு எதிர்ச்சொல் எது?",o:["பலவீனம்","சக்தி","வேகம்","திறமை"],a:0},
+{t:"சொல் வளம்",q:"'இனிமை' என்பதற்கு எதிர்ச்சொல் எது?",o:["கசப்பு","சுவை","மகிழ்ச்சி","அமைதி"],a:0},
+{t:"சொல் வளம்",q:"'பெரிய' என்பதற்கு எதிர்ச்சொல் எது?",o:["சிறிய","உயர்ந்த","நீண்ட","அகன்ற"],a:0},
+{t:"சொல் வளம்",q:"'உயர்வு' என்பதற்கு எதிர்ச்சொல் எது?",o:["தாழ்வு","பெருமை","மேன்மை","சிறப்பு"],a:0},
+{t:"சொல் வளம்",q:"'நேர்மை' என்பதற்கு எதிர்ச்சொல் எது?",o:["வஞ்சகம்","நேர்த்தி","சத்தியம்","தூய்மை"],a:0},
+{t:"சொல் வளம்",q:"'தூய்மை' என்பதற்கு எதிர்ச்சொல் எது?",o:["அழுக்கு","வெண்மை","களங்கம்","தெளிவு"],a:0},
+{t:"சொல் வளம்",q:"'இன்பம்' என்பதற்கு எதிர்ச்சொல் எது?",o:["துன்பம்","மகிழ்ச்சி","சுகம்","அமைதி"],a:0},
+{t:"சொல் வளம்",q:"'அன்பு' என்பதற்கு எதிர்ச்சொல் எது?",o:["வெறுப்பு","பாசம்","கருணை","நேசம்"],a:0},
+{t:"சொல் வளம்",q:"'கடல்' என்பதற்கு ஒத்த சொல் எது?",o:["வாரி","ஆறு","குளம்","ஏரி"],a:0},
+{t:"சொல் வளம்",q:"'மலர்' என்பதற்கு ஒத்த சொல் எது?",o:["பூ","இலை","கொடி","தளிர்"],a:0},
+{t:"சொல் வளம்",q:"'நீர்' என்பதற்கு ஒத்த சொல் எது?",o:["புனல்","மணல்","மழை","பனி"],a:0},
+{t:"சொல் வளம்",q:"'வீடு' என்பதற்கு ஒத்த சொல் எது?",o:["இல்லம்","மனை வளாகம்","கூடம்","மாளிகை"],a:0},
+{t:"சொல் வளம்",q:"'சூரியன்' என்பதற்கு ஒத்த சொல் எது?",o:["ஞாயிறு","திங்கள்","வெள்ளி","கோள்"],a:0},
+{t:"சொல் வளம்",q:"'நிலா' என்பதற்கு ஒத்த சொல் எது?",o:["திங்கள்","வெயில்","விண்மீன்","கதிரவன்"],a:0},
+{t:"சொல் வளம்",q:"'காற்று' என்பதற்கு ஒத்த சொல் எது?",o:["வளி","புகை","மேகம்","இடி"],a:0},
+{t:"சொல் வளம்",q:"'தீ' என்பதற்கு ஒத்த சொல் எது?",o:["அனல்","புகை","சாம்பல்","பொறி"],a:0},
+{t:"சொல் வளம்",q:"'மலை' என்பதற்கு ஒத்த சொல் எது?",o:["குன்று","பள்ளம்","பாறை","மேடு"],a:0},
+{t:"சொல் வளம்",q:"'ஆறு' என்பதற்கு ஒத்த சொல் எது?",o:["நதி","குளம்","கடல்","ஏரி"],a:0},
+{t:"பழமொழி",q:"'கிணற்றுத் தவளை' என்ற பழமொழி யாரைக் குறிக்கும்?",o:["உலக அனுபவம் இல்லாதவர்","மிகவும் அறிவாளி","பயமுள்ளவர்","சோம்பேறி"],a:0},
+{t:"பழமொழி",q:"'நாய் வாலை நிமிர்த்த முடியாது' என்பதன் பொருள் என்ன?",o:["இயல்பை மாற்ற முடியாது","நாயை வளர்க்கக் கூடாது","வேலை செய்ய மாட்டான்","பொய் சொல்பவன்"],a:0},
+{t:"பழமொழி",q:"'தூக்கணாங்குருவி கூடு கட்டியது போல்' என்பதன் பொருள் என்ன?",o:["நேர்த்தியாக அமைத்தல்","அவசரமாகச் செய்தல்","கெட்டுப்போனது","தாமதமாகச் செய்தல்"],a:0},
+{t:"பழமொழி",q:"'கண்ணை மூடிக்கொண்டு பால் குடித்தல்' என்பதன் பொருள் என்ன?",o:["தெரியாதது போல் நடித்தல்","அவசரமாகச் செய்தல்","மகிழ்ச்சியுடன் இருத்தல்","பயத்துடன் இருத்தல்"],a:0},
+{t:"பழமொழி",q:"'ஆடிப் பாடித் திரிதல்' என்பதன் பொருள் என்ன?",o:["மகிழ்ச்சியுடன் இருத்தல்","கவலையுடன் இருத்தல்","வேலை செய்தல்","சண்டையிடுதல்"],a:0},
+{t:"இலக்கணம்",q:"தமிழில் வல்லின எழுத்துகளுள் ஒன்று எது?",o:["க","ங","ய","ள"],a:0},
+{t:"இலக்கணம்",q:"தமிழில் மெல்லின எழுத்துகளுள் ஒன்று எது?",o:["ங","க","ச","ட"],a:0},
+{t:"இலக்கணம்",q:"தமிழில் இடையின எழுத்துகளுள் ஒன்று எது?",o:["ய","க","ங","ச"],a:0},
+{t:"பொது அறிவு",q:"'செம்மொழி' தகுதி தமிழுக்கு அறிவிக்கப்பட்ட ஆண்டு எது?",o:["2004","2008","2010","2000"],a:0},
+{t:"இலக்கியம்",q:"முதல் உலகத் தமிழ்ச் செம்மொழி மாநாடு நடைபெற்ற ஊர் எது?",o:["கோவை","சென்னை","மதுரை","திருச்சி"],a:0},
+{t:"இலக்கணம்",q:"'ஒற்று மிகும்' விதிக்கு எடுத்துக்காட்டு எது?",o:["மரம் + கன்று = மரக்கன்று","மரம் + இலை = மரவிலை","கல் + ஊரி = கல்லூரி","பொன் + அணி = பொன்னணி"],a:0},
+{t:"இலக்கணம்",q:"'ஒற்று மிகாது' விதிக்கு எடுத்துக்காட்டு எது?",o:["மரம் + இலை = மரத்திலை","மரம் + கன்று = மரக்கன்று","பால் + குடம் = பாற்குடம்","நிலம் + கடமை = நிலக்கடமை"],a:0},
+{t:"இலக்கணம்",q:"பண்புத்தொகைக்கு எடுத்துக்காட்டு எது?",o:["செந்தாமரை","மரக்கிளை","கண்ணன்","ஓடும் நீர்"],a:0},
+{t:"இலக்கணம்",q:"வினைத்தொகைக்கு எடுத்துக்காட்டு எது?",o:["ஓடும் நீர்","செந்தாமரை","மரக்கிளை","பொன்வளையல்"],a:0},
+{t:"இலக்கணம்",q:"உவமைத்தொகைக்கு எடுத்துக்காட்டு எது?",o:["தாமரைக் கண்","மரக்கிளை","செந்தாமரை","ஓடும் நீர்"],a:0},
+{t:"இலக்கணம்",q:"அன்மொழித்தொகைக்கு எடுத்துக்காட்டு எது?",o:["வெண்தாமரை (என்பவன்)","மரக்கிளை","செந்தாமரை","ஓடும் நீர்"],a:0},
+{t:"இலக்கணம்",q:"உம்மைத்தொகைக்கு எடுத்துக்காட்டு எது?",o:["தமிழும் ஆங்கிலமும் → தமிழாங்கிலம்","மரக்கிளை","செந்தாமரை","ஓடும் நீர்"],a:0},
+{t:"இலக்கணம்",q:"'நல் + தமிழ்' சேர்ந்து ஆகும் சொல் எது?",o:["நற்றமிழ்","நல்தமிழ்","நல்லதமிழ்","நன்தமிழ்"],a:0},
+{t:"இலக்கணம்",q:"'பொன் + தாமரை' சேர்ந்து ஆகும் சொல் எது?",o:["பொற்றாமரை","பொன்தாமரை","பொன்னாமரை","பொற்தாமரை"],a:0},
+{t:"இலக்கியம்",q:"தூய தமிழ் இயக்கத்தைத் தொடங்கியவர் யார்?",o:["பரிதிமாற் கலைஞர்","பாரதியார்","மறைமலையடிகள்","உ.வே.சாமிநாதையர்"],a:0},
+];
+
+const SAMPLE_STUB = [
+{t:"இலக்கணம்",q:"'செந்தாமரை' என்ற சொல் எந்த தொகைக்கு எடுத்துக்காட்டு?",o:["பண்புத்தொகை","வினைத்தொகை","உம்மைத்தொகை","அன்மொழித்தொகை"],a:0},
+{t:"சொல் வளம்",q:"'அறிவு' என்பதற்கு எதிர்ச்சொல் எது?",o:["அறியாமை","புத்தி","ஞானம்","திறமை"],a:0},
+{t:"இலக்கியம்",q:"'ஐங்குறுநூறு' எந்த தொகை நூல் தொகுப்பில் அடங்கும்?",o:["எட்டுத்தொகை","பத்துப்பாட்டு","பதினெண்கீழ்க்கணக்கு","சிலப்பதிகாரம்"],a:0},
+{t:"இலக்கணம்",q:"'படித்துக் கொண்டிருக்கிறான்' — இதில் உள்ள சொல் வகை எது?",o:["வினையெச்சம்","தொழிற்பெயர்","பெயரெச்சம்","குறிப்பு வினைமுற்று"],a:0},
+{t:"சொல் வளம்",q:"'இரவு' என்பதற்கு எதிர்ச்சொல் எது?",o:["பகல்","மாலை","அதிகாலை","நண்பகல்"],a:0},
+];
+
+const TESTS = [
+  {id:"full1", title:"முழு மாதிரித் தேர்வு - 1", tier:"free", minutes:90, questions:FULL1_QUESTIONS},
+  {id:"full2", title:"முழு மாதிரித் தேர்வு - 2", tier:"free", minutes:20, questions:SAMPLE_STUB},
+  {id:"full3", title:"முழு மாதிரித் தேர்வு - 3", tier:"free", minutes:20, questions:SAMPLE_STUB},
+  {id:"full4", title:"முழு மாதிரித் தேர்வு - 4", tier:"premium", minutes:90, questions:[]},
+];
+
+let state = { testId:null, questions:[], current:0, answers:{}, timeLeft:0, timerId:null };
+let isPremiumUnlocked = false;
+let pendingLockTest = null;
+
+function $(id){ return document.getElementById(id); }
+
+/* ---------------- Library ---------------- */
+function renderLibrary(){
+  const grid = $('testGrid');
+  grid.innerHTML = '';
+  TESTS.forEach((test,idx)=>{
+    const locked = test.tier==='premium' && !isPremiumUnlocked;
+    const card = document.createElement('div');
+    card.className = 'test-card';
+    const qCount = test.questions.length;
+    card.innerHTML = `
+      ${locked ? '<span class="lock">🔒 பிரீமியம்</span>' : ''}
+      <span class="num">${String(idx+1).padStart(2,'0')}</span>
+      <h3>${test.title}</h3>
+      <div class="meta">${locked ? '<span class="lock-inline">🔒 பிரீமியம் · </span>' : ''}${qCount>0 ? qCount+' வினாக்கள்' : 'விரைவில்'} · ${test.minutes} நிமிடம்</div>
+      <button class="btn ${locked?'secondary':''}">${locked ? 'திற' : 'தொடங்கு'}</button>
+    `;
+    card.querySelector('button').onclick = ()=> onTestCardClick(test);
+    grid.appendChild(card);
+  });
+}
+
+function onTestCardClick(test){
+  if(test.tier==='premium' && !isPremiumUnlocked){
+    pendingLockTest = test;
+    $('lockTitle').textContent = test.title;
+    $('lockModal').hidden = false;
+    return;
+  }
+  if(test.questions.length===0){
+    alert('இந்த தேர்வுக்கான வினாக்கள் விரைவில் சேர்க்கப்படும்.');
+    return;
+  }
+  startTest(test);
+}
+
+function closeLockModal(){ $('lockModal').hidden = true; pendingLockTest = null; }
+function demoUnlock(){
+  isPremiumUnlocked = true;
+  $('lockModal').hidden = true;
+  renderLibrary();
+  if(pendingLockTest && pendingLockTest.questions.length>0){
+    startTest(pendingLockTest);
+  } else if(pendingLockTest){
+    alert('இந்த தேர்வுக்கான வினாக்கள் விரைவில் சேர்க்கப்படும்.');
+  }
+  pendingLockTest = null;
+}
+
+/* ---------------- Test flow ---------------- */
+function startTest(test){
+  state = { testId:test.id, questions:test.questions, current:0, answers:{}, timeLeft:test.minutes*60, timerId:null };
+  $('screen-lib').hidden = true;
+  $('screen-result').hidden = true;
+  $('screen-test').hidden = false;
+  renderTopMeta();
+  buildOmrGrid();
+  renderQuestion();
+  state.timerId = setInterval(tick, 1000);
+}
+
+function backToLibrary(){
+  clearInterval(state.timerId);
+  $('screen-result').hidden = true;
+  $('screen-test').hidden = true;
+  $('screen-lib').hidden = false;
+  $('topmeta').innerHTML = '';
+  renderLibrary();
+}
+
+function renderTopMeta(){
+  $('topmeta').innerHTML = `
+    <button class="backbtn" onclick="backToLibrary()">← தேர்வுகள்</button>
+    <span class="pill"><span class="dot"></span> வினா <b id="qposLabel">${state.current+1}</b>/${state.questions.length}</span>
+    <span class="pill timer" id="timerPill"><span class="dot"></span> <span id="timerLabel">${fmtTime(state.timeLeft)}</span></span>`;
+}
+
+function fmtTime(s){
+  const m = Math.floor(s/60).toString().padStart(2,'0');
+  const sec = (s%60).toString().padStart(2,'0');
+  return `${m}:${sec}`;
+}
+
+function tick(){
+  state.timeLeft--;
+  const label = $('timerLabel');
+  const pill = $('timerPill');
+  if(label) label.textContent = fmtTime(state.timeLeft);
+  if(pill && state.timeLeft <= 60) pill.classList.add('low');
+  if(state.timeLeft <= 0){
+    clearInterval(state.timerId);
+    submitTest();
+  }
+}
+
+function renderQuestion(){
+  const q = state.questions[state.current];
+  $('qnumBadge').textContent = state.current+1;
+  $('qtext').textContent = q.q;
+  $('qtopic').textContent = q.t;
+  const optWrap = $('options');
+  optWrap.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  q.o.forEach((optText, i)=>{
+    const div = document.createElement('div');
+    div.className = 'opt' + (state.answers[state.current]===i ? ' selected':'');
+    div.onclick = ()=> selectOption(state.current, i);
+    div.innerHTML = `<span class="bubble">${letters[i]}</span><span class="opttext">${optText}</span>`;
+    optWrap.appendChild(div);
+  });
+  $('prevBtn').disabled = state.current===0;
+  $('nextBtn').textContent = state.current===state.questions.length-1 ? 'முடிவுறை பார்' : 'அடுத்தது →';
+  document.querySelectorAll('#qposLabel').forEach(el=> el.textContent = state.current+1);
+  highlightOmrRow();
+}
+
+function selectOption(qIndex, optIndex){
+  state.answers[qIndex] = optIndex;
+  renderQuestion();
+  refreshOmrGrid();
+  if(qIndex === state.questions.length-1) return;
+  setTimeout(()=>{
+    if(state.current === qIndex){
+      state.current++;
+      renderQuestion();
+    }
+  }, 1000);
+}
+
+function clearCurrent(){
+  delete state.answers[state.current];
+  renderQuestion();
+  refreshOmrGrid();
+}
+
+function goNext(){
+  if(state.current < state.questions.length-1){
+    state.current++;
+    renderQuestion();
+  } else {
+    submitTest();
+  }
+}
+function goPrev(){
+  if(state.current>0){ state.current--; renderQuestion(); }
+}
+
+function buildOmrGrid(){
+  const grid = $('omrGrid');
+  grid.innerHTML = '';
+  const letters=['A','B','C','D'];
+  state.questions.forEach((q,qi)=>{
+    const row = document.createElement('div');
+    row.className = 'omr-row';
+    row.id = 'omrRow'+qi;
+    let bubbles = '';
+    letters.forEach((L,li)=>{
+      bubbles += `<div class="obub" id="obub-${qi}-${li}" onclick="selectAndJump(${qi},${li})">${L}</div>`;
+    });
+    row.innerHTML = `<span class="rn">${qi+1}</span>${bubbles}`;
+    grid.appendChild(row);
+  });
+  const drag = $('omrDrag');
+  const toggle = ()=> $('omrPanel').classList.toggle('open');
+  if(drag) drag.onclick = toggle;
+  document.querySelector('.omr-title').onclick = toggle;
+  refreshOmrGrid();
+}
+
+function selectAndJump(qi, li){
+  state.current = qi;
+  selectOption(qi, li);
+}
+
+function refreshOmrGrid(){
+  state.questions.forEach((q,qi)=>{
+    for(let li=0; li<4; li++){
+      const b = $(`obub-${qi}-${li}`);
+      if(!b) continue;
+      b.classList.toggle('filled', state.answers[qi]===li);
+    }
+  });
+  const answered = Object.keys(state.answers).length;
+  $('progressTxt').textContent = `${answered} / ${state.questions.length} பதிலளிக்கப்பட்டது`;
+}
+
+function highlightOmrRow(){
+  document.querySelectorAll('.omr-row').forEach(r=>r.classList.remove('current'));
+  const row = $('omrRow'+state.current);
+  if(row){ row.classList.add('current'); row.scrollIntoView({block:'nearest'}); }
+}
+
+function submitTest(){
+  clearInterval(state.timerId);
+  $('screen-test').hidden = true;
+  $('screen-result').hidden = false;
+  $('topmeta').innerHTML = '';
+
+  let correct=0, wrong=0, skipped=0;
+  const letters=['A','B','C','D'];
+  const reviewWrap = $('reviewList');
+  reviewWrap.innerHTML = '';
+
+  state.questions.forEach((q,qi)=>{
+    const given = state.answers[qi];
+    let status;
+    if(given===undefined){ skipped++; status='skip'; }
+    else if(given===q.a){ correct++; status='ok'; }
+    else { wrong++; status='bad'; }
+
+    const div = document.createElement('div');
+    div.className = 'review';
+    const givenTxt = given!==undefined ? `${letters[given]}. ${q.o[given]}` : '— பதிலளிக்கப்படவில்லை —';
+    const correctTxt = `${letters[q.a]}. ${q.o[q.a]}`;
+    div.innerHTML = `
+      <div class="qhead"><div class="qnum">${qi+1}</div><div class="qtext">${q.q}</div></div>
+      <div class="ans-line">உங்கள் பதில்: <b class="${status==='ok'?'tag-ok':(status==='bad'?'tag-bad':'')}">${givenTxt}</b></div>
+      ${status!=='ok' ? `<div class="ans-line">சரியான பதில்: <b class="tag-ok">${correctTxt}</b></div>` : ''}
+    `;
+    reviewWrap.appendChild(div);
+  });
+
+  $('scoreText').innerHTML = `${correct}<span>/${state.questions.length}</span>`;
+  $('breakdown').innerHTML = `
+    <div class="chip ok">சரி: ${correct}</div>
+    <div class="chip bad">தவறு: ${wrong}</div>
+    <div class="chip skip">விடுபட்டவை: ${skipped}</div>
+  `;
+}
+
+renderLibrary();
+</script>
+</body>
+</html>
